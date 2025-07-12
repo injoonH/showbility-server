@@ -1,6 +1,7 @@
 val exposedVersion: String by project
 val flywayVersion: String by project
 val kotlinLoggingVersion: String by project
+val springdocVersion: String by project
 
 plugins {
     kotlin("jvm") version "1.9.25"
@@ -37,6 +38,8 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
