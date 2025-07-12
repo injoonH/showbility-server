@@ -1,0 +1,16 @@
+name: showbility
+
+services:
+  db:
+    image: postgres:17.5
+    ports:
+      - ${DB_PORT:-5432}:5432
+    environment:
+      - POSTGRES_USER=${DB_USER:?err}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:?err}
+      - POSTGRES_DB=${DB_NAME:?err}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
