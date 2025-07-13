@@ -55,3 +55,15 @@ kotlin {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register<JavaExec>("generateMigrationScript") {
+    group = "application"
+    description = "Generate migration script"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "art.showbility.script.GenerateMigrationScriptKt"
+
+    val scriptDescription = project.findProperty("description") as? String
+        ?: throw GradleException("Property 'description' is required")
+
+    args = listOf(scriptDescription)
+}
