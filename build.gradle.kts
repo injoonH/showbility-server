@@ -28,6 +28,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
@@ -44,7 +45,7 @@ dependencies {
 
     implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -67,8 +68,9 @@ tasks.register<JavaExec>("generateMigrationScript") {
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = "art.showbility.script.GenerateMigrationScriptKt"
 
-    val scriptDescription = project.findProperty("description") as? String
-        ?: throw GradleException("Property 'description' is required")
+    val scriptDescription =
+        project.findProperty("description") as? String
+            ?: throw GradleException("Property 'description' is required")
 
     args = listOf(scriptDescription)
 }
