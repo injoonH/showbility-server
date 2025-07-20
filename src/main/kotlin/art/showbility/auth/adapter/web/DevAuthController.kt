@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
+const val DEFAULT_TOKEN_VALIDITY_SECONDS = 3_600L
+
 @Profile(ActiveProfile.NOT_LIVE)
 @RestController
 @Tag(name = "Auth")
@@ -25,7 +27,7 @@ class DevAuthController(
     fun issueToken(
         @PathVariable userId: UserId,
     ): ResponseEntity<String> {
-        val token = jwtProvider.generateToken(userId, 3_600)
+        val token = jwtProvider.generateToken(userId, DEFAULT_TOKEN_VALIDITY_SECONDS)
         return ResponseEntity.ok(token)
     }
 }
