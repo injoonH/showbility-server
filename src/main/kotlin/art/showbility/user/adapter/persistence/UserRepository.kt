@@ -9,6 +9,7 @@ import art.showbility.user.domain.User
 import art.showbility.user.domain.UserId
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.update
 import org.springframework.stereotype.Repository
@@ -31,6 +32,13 @@ class UserRepository :
             .where { UserTable.id eq id.value }
             .single()
             .toUser()
+
+    override fun checkExistsById(id: UserId) {
+        UserTable
+            .select(UserTable.id)
+            .where { UserTable.id eq id.value }
+            .single()
+    }
 
     override fun create(command: CreateUserCommand): UserId =
         UserTable
