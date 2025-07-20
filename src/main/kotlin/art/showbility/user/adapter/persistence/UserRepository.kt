@@ -28,7 +28,7 @@ class UserRepository :
 
     override fun getById(id: UserId): User = findById(id) ?: throwUserNotFound(id)
 
-    override fun checkExistsById(id: UserId) {
+    override fun ensureUserExists(id: UserId) {
         UserTable
             .select(UserTable.id)
             .where { UserTable.id eq id.value }
