@@ -1,5 +1,6 @@
 val exposedVersion: String by project
 val flywayVersion: String by project
+val jwtVersion: String by project
 val kotlinLoggingVersion: String by project
 val springdocVersion: String by project
 
@@ -27,6 +28,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
@@ -37,9 +39,13 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
     runtimeOnly("org.postgresql:postgresql")
 
+    implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
+
     implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -54,16 +60,4 @@ kotlin {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.register<JavaExec>("generateMigrationScript") {
-    group = "application"
-    description = "Generate migration script"
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "art.showbility.script.GenerateMigrationScriptKt"
-
-    val scriptDescription = project.findProperty("description") as? String
-        ?: throw GradleException("Property 'description' is required")
-
-    args = listOf(scriptDescription)
 }
