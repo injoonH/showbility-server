@@ -8,5 +8,5 @@ interface QueryUserPort {
 
     fun getById(id: UserId): User
 
-    fun checkExistsById(id: UserId)
+    fun ensureUserExists(id: UserId)
 }

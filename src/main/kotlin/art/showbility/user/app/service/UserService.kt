@@ -45,7 +45,7 @@ class UserService(
     ) {
         check(nickname.isNotBlank())
         transaction {
-            queryUserPort.checkExistsById(id)
+            queryUserPort.ensureUserExists(id)
             updateUserPort.updateUser(
                 UpdateUserCommand(
                     id = id,

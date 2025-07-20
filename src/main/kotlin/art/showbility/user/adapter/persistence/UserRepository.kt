@@ -26,18 +26,13 @@ class UserRepository :
             .singleOrNull()
             ?.toUser()
 
-    override fun getById(id: UserId): User =
-        UserTable
-            .selectAll()
-            .where { UserTable.id eq id.value }
-            .single()
-            .toUser()
+    override fun getById(id: UserId): User = findById(id) ?: throwUserNotFound(id)
 
-    override fun checkExistsById(id: UserId) {
+    override fun ensureUserExists(id: UserId) {
         UserTable
             .select(UserTable.id)
             .where { UserTable.id eq id.value }
-            .single()
+            .singleOrNull() ?: throwUserNotFound(id)
     }
 
     override fun create(command: CreateUserCommand): UserId =
@@ -59,4 +54,6 @@ class UserRepository :
             handle = this[UserTable.handle],
             nickname = this[UserTable.nickname],
         )
+
+    private fun throwUserNotFound(id: UserId): Nothing = throw NoSuchElementException("User with id ${id.value} not found.")
 }
