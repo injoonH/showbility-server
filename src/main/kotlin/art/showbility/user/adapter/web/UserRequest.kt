@@ -5,4 +5,8 @@ object UserRequest {
         val handle: String,
         val nickname: String,
     )
+
+    data class UpdateMyselfRequest(
+        val nickname: String,
+    )
 }
