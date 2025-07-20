@@ -2,15 +2,16 @@ name: showbility
 
 services:
   db:
-    image: postgres:17.5
+    image: mysql:8.4
     ports:
-      - ${DB_PORT:-5432}:5432
+      - ${DB_PORT:-3306}:3306
     environment:
-      - POSTGRES_USER=${DB_USER:?err}
-      - POSTGRES_PASSWORD=${DB_PASSWORD:?err}
-      - POSTGRES_DB=${DB_NAME:?err}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:?err}
+      - MYSQL_DATABASE=${DB_NAME:?err}
+      - MYSQL_USER=${DB_USER:?err}
+      - MYSQL_PASSWORD=${DB_PASSWORD:?err}
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/mysql
 
 volumes:
   db:
