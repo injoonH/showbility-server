@@ -15,13 +15,13 @@ import org.springframework.security.web.authentication.logout.LogoutFilter
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    jwtProvider: JwtProvider,
+    val jwtProvider: JwtProvider,
 ) {
-    val jwtAuthFilter = JwtAuthFilter(jwtProvider)
-
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain =
-        http
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+        val jwtAuthFilter = JwtAuthFilter(jwtProvider)
+
+        return http
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { authorize ->
@@ -38,4 +38,5 @@ class SecurityConfig(
             // https://docs.spring.io/spring-security/reference/servlet/architecture.html#_adding_a_custom_filter
             .addFilterAfter(jwtAuthFilter, LogoutFilter::class.java)
             .build()
+    }
 }
