@@ -16,12 +16,13 @@ val DB_NAME = System.getenv("DB_NAME")
 val DB_USER = System.getenv("DB_USER")
 val DB_PASSWORD = System.getenv("DB_PASSWORD")
 
-val database = Database.connect(
-    driver = "org.postgresql.Driver",
-    url = "jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME",
-    user = DB_USER,
-    password = DB_PASSWORD,
-)
+val database =
+    Database.connect(
+        driver = "org.postgresql.Driver",
+        url = "jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME",
+        user = DB_USER,
+        password = DB_PASSWORD,
+    )
 
 val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 
@@ -31,7 +32,7 @@ fun getScriptName(description: String): String {
 }
 
 @OptIn(ExperimentalDatabaseMigrationApi::class)
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
     val description = args.first().lowercase().replace(" ", "_")
 
     transaction(database) {
