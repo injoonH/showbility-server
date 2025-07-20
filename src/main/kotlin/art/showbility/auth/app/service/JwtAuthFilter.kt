@@ -23,7 +23,7 @@ class JwtAuthFilter(
         if (!token.isNullOrBlank()) {
             val signature = jwtProvider.parseToken(token)
             if (signature == null) {
-                setInvalid(response)
+                setUnauthorized(response)
                 return
             }
 
@@ -36,7 +36,7 @@ class JwtAuthFilter(
         filterChain.doFilter(request, response)
     }
 
-    private fun setInvalid(response: HttpServletResponse) {
-        response.status = 422
+    private fun setUnauthorized(response: HttpServletResponse) {
+        response.status = 401
     }
 }
