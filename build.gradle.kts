@@ -1,5 +1,4 @@
 val exposedVersion: String by project
-val flywayVersion: String by project
 val jwtVersion: String by project
 val kotlinLoggingVersion: String by project
 val springdocVersion: String by project
@@ -36,8 +35,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-migration:$exposedVersion")
-    implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.flywaydb:flyway-mysql")
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")
