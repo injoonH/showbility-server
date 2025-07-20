@@ -43,6 +43,7 @@ class UserService(
         id: UserId,
         nickname: String,
     ) {
+        check(nickname.isNotBlank())
         transaction {
             updateUserPort.updateUser(
                 UpdateUserCommand(
